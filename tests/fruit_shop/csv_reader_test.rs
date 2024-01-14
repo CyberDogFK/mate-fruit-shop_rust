@@ -1,8 +1,8 @@
-use fruit_shop_rust::csv_reader;
 use std::fs::File;
 use std::io::Write;
 use uuid::Uuid;
 use std::ops::{Deref, DerefMut};
+use fruit_shop_rust::service::csv_reader;
 
 const CORRECT_EXAMPLE_FILE: &str = "example.csv";
 const NON_EXISTED_FILE: &str = "";
@@ -18,8 +18,8 @@ const CORRECT_EXAMPLE_LIST: [&str; 9] = [
     "s,banana,50",
 ];
 
-const CORRECT_NUMBER_OF_SKIP_LINES: i32 = 3;
-const NON_CORRECT_NUMBER_OF_SKIP_LINES: i32 = 100;
+const CORRECT_NUMBER_OF_SKIP_LINES: usize = 3;
+const NON_CORRECT_NUMBER_OF_SKIP_LINES: usize = 100;
 
 fn init() {
     create_new_file(CORRECT_EXAMPLE_FILE).expect("Can't create file!");

@@ -11,7 +11,11 @@ path = "src/lib.rs"
 path = "src/main.rs"
 name = "fruit_shop"
 
+[profile.release]
+lto = true
+
 [dependencies]
+lazy_static = "1.4.0"
 
 [dev-dependencies]
 fake = "~2.3"
