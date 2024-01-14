@@ -1,16 +1,16 @@
-use std::convert::TryFrom;
-use std::error::Error;
 use crate::strategy::operation::Operation::{BALANCE, PURCHASE, RETURN, SUPPLY};
+use crate::service::ParseError;
 
+#[derive(PartialEq, Eq, Hash)]
 pub enum Operation {
     BALANCE,
     SUPPLY,
     PURCHASE,
-    RETURN
+    RETURN,
 }
 
 impl TryFrom<&str> for Operation {
-    type Error = String;
+    type Error = ParseError;
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         match value {
@@ -18,8 +18,7 @@ impl TryFrom<&str> for Operation {
             "s" => Ok(SUPPLY),
             "p" => Ok(PURCHASE),
             "r" => Ok(RETURN),
-            _ => Err("Wrong operation code".to_string())
+            _ => Err(ParseError::OperationParseError)
         }
     }
 }
-
