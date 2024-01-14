@@ -1,8 +1,9 @@
+use fruit_shop_rust::service::csv_reader;
 use std::fs::File;
 use std::io::Write;
-use uuid::Uuid;
 use std::ops::{Deref, DerefMut};
-use fruit_shop_rust::service::csv_reader;
+use uuid::Uuid;
+use crate::helper;
 
 const CORRECT_EXAMPLE_FILE: &str = "example.csv";
 const NON_EXISTED_FILE: &str = "";
@@ -22,51 +23,11 @@ const CORRECT_NUMBER_OF_SKIP_LINES: usize = 3;
 const NON_CORRECT_NUMBER_OF_SKIP_LINES: usize = 100;
 
 fn init() {
-    create_new_file(CORRECT_EXAMPLE_FILE).expect("Can't create file!");
+    create_new_file().expect("Can't create file!");
 }
 
-fn after_all() {
-    std::fs::remove_file(CORRECT_EXAMPLE_FILE).expect("Can't remove file!")
-}
-
-struct TestFile {
-    file: File,
-    name: String
-}
-
-impl TestFile {
-    pub fn create_with_random_name() -> std::io::Result<TestFile> {
-        let name = Uuid::new_v4().to_string();
-        Ok(TestFile {
-            file: File::create(name.as_str())?,
-            name,
-        })
-    }
-}
-
-impl Drop for TestFile {
-    fn drop(&mut self) {
-        std::fs::remove_file(self.name.as_str())
-            .expect("Can't remove file!")
-    }
-}
-
-impl Deref for TestFile {
-    type Target = File;
-
-    fn deref(&self) -> &Self::Target {
-        &self.file
-    }
-}
-
-impl DerefMut for TestFile {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.file
-    }
-}
-
-fn create_new_file(path: &str) -> std::io::Result<()> {
-    let mut file = TestFile::create_with_random_name()?;
+fn create_new_file() -> std::io::Result<()> {
+    let mut file = helper::TestFile::create_with_random_name()?;
     let mut buffer: Vec<u8> = Vec::new();
     {
         CORRECT_EXAMPLE_LIST.iter().for_each(|i| {
@@ -81,7 +42,7 @@ fn create_new_file(path: &str) -> std::io::Result<()> {
 fn read_skip_correct_number_of_lines() {
     init();
     let expected_list = CORRECT_EXAMPLE_LIST
-        [(CORRECT_NUMBER_OF_SKIP_LINES as usize)..CORRECT_EXAMPLE_LIST.len()]
+        [CORRECT_NUMBER_OF_SKIP_LINES..CORRECT_EXAMPLE_LIST.len()]
         .to_vec();
     let actual_list =
         csv_reader::read_file_with_skip_lines(CORRECT_EXAMPLE_FILE, CORRECT_NUMBER_OF_SKIP_LINES)

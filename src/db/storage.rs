@@ -1,7 +1,7 @@
+use lazy_static::lazy_static;
 use std::collections::hash_map::Iter;
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut};
-use lazy_static::lazy_static;
 
 // lazy_static! {
 //     static ref FRUIT_STORAGE: Storage = {
