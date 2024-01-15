@@ -1,6 +1,5 @@
-use std::fs;
 use std::fs::{File, OpenOptions};
-use std::io::{BufWriter, LineWriter, Write};
+use std::io::{BufWriter, Write};
 use std::path::Path;
 
 pub struct CsvWriter {
@@ -13,8 +12,8 @@ impl CsvWriter {
     }
 
     pub fn save_to_file<P>(&self, file_path: P, lines_to_file: String) -> std::io::Result<File>
-        where
-            P: AsRef<Path>,
+    where
+        P: AsRef<Path>,
     {
         let file = OpenOptions::new()
             .read(true)
@@ -29,8 +28,7 @@ impl CsvWriter {
             lines_to_file
         };
 
-        BufWriter::new(&file)
-            .write_all(lines_to_file.as_bytes())?;
+        BufWriter::new(&file).write_all(lines_to_file.as_bytes())?;
         Ok(file)
     }
 }

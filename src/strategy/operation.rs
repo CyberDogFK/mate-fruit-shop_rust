@@ -1,5 +1,5 @@
-use crate::strategy::operation::Operation::{BALANCE, PURCHASE, RETURN, SUPPLY};
 use crate::service::ParseError;
+use crate::strategy::operation::Operation::{BALANCE, PURCHASE, RETURN, SUPPLY};
 
 #[derive(PartialEq, Eq, Hash)]
 pub enum Operation {
@@ -18,7 +18,7 @@ impl TryFrom<&str> for Operation {
             "s" => Ok(SUPPLY),
             "p" => Ok(PURCHASE),
             "r" => Ok(RETURN),
-            _ => Err(ParseError::OperationParseError)
+            _ => Err(ParseError::OperationParseError),
         }
     }
 }

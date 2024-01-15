@@ -1,9 +1,6 @@
-use fruit_shop_rust::service::csv_reader;
-use std::fs::File;
-use std::io::Write;
-use std::ops::{Deref, DerefMut};
-use uuid::Uuid;
 use crate::helper;
+use fruit_shop_rust::service::csv_reader;
+use std::io::Write;
 
 const CORRECT_EXAMPLE_FILE: &str = "example.csv";
 const NON_EXISTED_FILE: &str = "";
@@ -41,9 +38,8 @@ fn create_new_file() -> std::io::Result<()> {
 #[test]
 fn read_skip_correct_number_of_lines() {
     init();
-    let expected_list = CORRECT_EXAMPLE_LIST
-        [CORRECT_NUMBER_OF_SKIP_LINES..CORRECT_EXAMPLE_LIST.len()]
-        .to_vec();
+    let expected_list =
+        CORRECT_EXAMPLE_LIST[CORRECT_NUMBER_OF_SKIP_LINES..CORRECT_EXAMPLE_LIST.len()].to_vec();
     let actual_list =
         csv_reader::read_file_with_skip_lines(CORRECT_EXAMPLE_FILE, CORRECT_NUMBER_OF_SKIP_LINES)
             .unwrap();
@@ -72,9 +68,4 @@ fn read_correct_file() {
 #[test]
 fn read_non_existed_file_error() {
     assert!(csv_reader::read_file(NON_EXISTED_FILE).is_err());
-}
-
-#[test]
-fn health_check() {
-    assert!(true)
 }

@@ -29,10 +29,7 @@ impl TestFile {
             .write(true)
             .open(&name)
             .unwrap();
-        Self {
-            file,
-            name,
-        }
+        Self { file, name }
     }
 
     pub fn read_from_file(&self) -> String {
@@ -46,8 +43,7 @@ impl TestFile {
 
 impl Drop for TestFile {
     fn drop(&mut self) {
-        std::fs::remove_file(&self.name)
-            .expect("Can't remove file!")
+        std::fs::remove_file(&self.name).expect("Can't remove file!")
     }
 }
 

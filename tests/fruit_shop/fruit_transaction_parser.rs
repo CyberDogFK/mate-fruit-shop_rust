@@ -6,11 +6,7 @@ const TEST_NAME_2: &str = "apple";
 const CORRECT_LINE: &str = "b,banana,20";
 
 fn get_correct_fruit_transaction() -> FruitTransaction {
-    get_fruit_transaction(
-        Operation::BALANCE,
-        TEST_NAME_1.to_string(),
-        20,
-    )
+    get_fruit_transaction(Operation::BALANCE, TEST_NAME_1.to_string(), 20)
 }
 
 fn get_fruit_transactions_one_line_list() -> Vec<FruitTransaction> {
@@ -43,16 +39,14 @@ fn get_correct_fruit_transaction_list() -> Vec<FruitTransaction> {
 
 #[test]
 fn parse_correct_list() {
-    let actual = parse(&get_correct_example_list())
-        .unwrap();
+    let actual = parse(&get_correct_example_list()).unwrap();
     let expected = get_correct_fruit_transaction_list();
     assert!(actual.iter().all(|t| expected.contains(t)))
 }
 
 #[test]
 fn parse_correct_string() {
-    let actual = parse(&vec![CORRECT_LINE.to_string()])
-        .unwrap();
+    let actual = parse(&[CORRECT_LINE.to_string()]).unwrap();
     let expect = get_fruit_transactions_one_line_list();
     assert!(actual.iter().all(|t| expect.contains(t)))
 }
@@ -60,11 +54,11 @@ fn parse_correct_string() {
 fn get_fruit_transaction(
     operation: Operation,
     fruit_name: String,
-    value_of_fruit: i32
+    value_of_fruit: i32,
 ) -> FruitTransaction {
     FruitTransaction {
         operation,
         fruit_name,
-        value_of_fruit
+        value_of_fruit,
     }
 }

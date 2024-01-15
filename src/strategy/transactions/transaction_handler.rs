@@ -1,7 +1,7 @@
+use crate::strategy::FruitTransaction;
+use crate::FruitStorage;
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::db::FruitStorage;
-use crate::strategy::FruitTransaction;
 
 pub trait TransactionHandler {
     fn apply(&mut self, fruit_transaction: &FruitTransaction);
@@ -39,8 +39,10 @@ pub struct SavedHandler(Rc<RefCell<FruitStorage>>);
 
 impl TransactionHandler for SavedHandler {
     fn apply(&mut self, fruit_transaction: &FruitTransaction) {
-        self.0.borrow_mut()
-            .insert(fruit_transaction.fruit_name.clone(), fruit_transaction.value_of_fruit);
+        self.0.borrow_mut().insert(
+            fruit_transaction.fruit_name.clone(),
+            fruit_transaction.value_of_fruit,
+        );
     }
 }
 
